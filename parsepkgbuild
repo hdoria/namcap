@@ -1,0 +1,100 @@
+#!/bin/bash
+
+mkdir -p /tmp/parsepkgbuild
+
+source /etc/makepkg.conf
+export CARCH
+
+export PATH=/tmp/parsepkgbuild; exec /bin/bash --noprofile --norc -r << EOF
+
+source $1
+
+# ensure $pkgname and $pkgver variables were found
+if [ -z "\$pkgname" -o -z "\$pkgver" ]; then
+	echo "   error: invalid package file"
+	exit 1
+fi 
+
+# create desc entry
+echo -e "%NAME%\n\$pkgname\n"
+echo -e "%VERSION%\n\$pkgver-\$pkgrel\n"
+if [ -n "\$pkgdesc" ]; then
+	echo -e "%DESC%\n\$pkgdesc\n"
+fi
+if [ -n "\$groups" ]; then
+	echo "%GROUPS%"
+	for i in \${groups[@]}; do echo \$i; done
+	echo ""
+fi
+
+[ -n "\$url" ] && echo -e "%URL%\n\$url\n"
+if [ -n "\$license" ]; then
+	echo "%LICENSE%"
+	for i in \${license[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$arch" ]; then
+	echo "%ARCH%"
+	for i in \${arch[@]}; do echo \$i; done
+	echo ""
+fi
+[ -n "\$builddate" ] && echo -e "%BUILDDATE%\n\$builddate\n"
+[ -n "\$packager" ] && echo -e "%PACKAGER%\n\$packager\n"
+
+if [ -n "\$replaces" ]; then
+	echo "%REPLACES%"
+	for i in \${replaces[@]}; do echo \$i; done
+	echo ""
+fi
+[ -n "\$force" ] && echo -e "%FORCE%\n"
+
+# create depends entry
+if [ -n "\$depends" ]; then
+	echo "%DEPENDS%"
+	for i in \${depends[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$makedepends" ]; then
+	echo "%MAKEDEPENDS%"
+	for i in \${makedepends[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$optdepends" ]; then
+	echo "%OPTDEPENDS%"
+	for i in \${!optdepends[*]}; do echo \${optdepends[\$i]%:*}; done
+	echo ""
+fi
+if [ -n "\$conflicts" ]; then
+	echo "%CONFLICTS%"
+	for i in \${conflicts[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$provides" ]; then
+	echo "%PROVIDES%"
+	for i in \${provides[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$backup" ]; then
+	echo "%BACKUP%"
+	for i in \${backup[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$options" ]; then
+	echo "%OPTIONS%"
+	for i in \${options[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$source" ]; then
+	echo "%SOURCE%"
+	for i in \${source[@]}; do echo \$i; done
+	echo ""
+fi
+if [ -n "\$md5sums" ]; then
+	echo "%MD5SUMS%"
+	for i in \${md5sums[@]}; do echo \$i; done
+	echo ""
+fi
+
+[ -n "\$install" ] && echo -e "%INSTALL%\n\$install\n"
+
+EOF

@@ -1,0 +1,112 @@
+.TH namcap 1 "July 24, 2007" "namcap 2.0" "User Commands"
+.SH NAME
+namcap \- package analysis utility
+.SH SYNOPSIS
+\fBnamcap [options] <package|PKGBUILD> [package|PKGBUILD] ...
+.SH DESCRIPTION
+.PP
+\fBnamcap\fP is a \fIpackage analysis\fP utility that looks for problems with archlinux packages or their PKGBUILD files.  It can apply rules to the file list, the files themselves, or individual PKGBUILD files.
+.PP
+Rules return lists of messages.  Each message can be one of three types: error, warning, or information (think of them as notes or comments).  Errors (designated by 'E:') are things that namcap is very sure are wrong and need to be fixed.  Warnings (designated by 'W:') are things that namcap thinks should be changed but if you know what you're doing then you can leave them.  Information (designated 'I:') are only shown when you use the info arguement.  Information messages give information that might be helpful but isn't anything that needs changing.
+.SH OPTIONS
+.TP
+.B "\-i, \-\-info"
+display information messages
+.TP
+\fB\-r\fR RULELIST, \fB\-\-rules=\fRRULELIST
+only apply RULELIST rules to the package
+.IP
+RULELIST is a comma-seperated list of rule names; if RULELIST=list then namcap returns a list of valid rules and their descriptions
+.SH RULES
+.TP
+.B arrays
+arrays verifies that array variables are actually arrays and not strings
+.TP
+.B badbackups
+badbackups verifies that backup entries don't have a / at the beginning of them
+.TP
+.B carch
+carch looks for references to i686 and i586 and tells you to use $CARCH instead
+.TP
+.B capsnames
+capsnames checks a PKGBUILD to verify the package name does not include upper case characters
+.TP
+.B capsnamespkg
+capsnamespkg checks a package to verify the package name does not include upper case characters
+.TP
+.B depends
+depends runs ldd on all executables, gets the link-level dependencies, finds the smallest subset of dependencies that cover the link-level dependencies, and compares that list to the depends of the package.  It returns messages in three cases: dependency detected and not included, dependency included but already satisfied, and dependency included and not needed.  These suggestions are just guidelines and all package builders should take this into account (ie. you're smarter than namcap is)
+
+Some cases where namcap fails are dlopen() and obscure links.  dlopen()'d libraries don't show up because they are loaded at run time: in the case of a prgram that loads plugins.  Obscure links are the cases where only a small portion of the package needs something to run; usually, the small portion won't be accesed unless that thing is installed (i.e. a java plugin for mozilla included in the java package).
+.TP
+.B directoryname
+directoryname checks all of the directory names for standard directories (ie. /etc, /usr/bin, /usr/lib).  All files in directories that are non-standard are returned
+.TP
+.B emptydir
+emptydir looks for directories in a package that don't contain any files
+.TP
+.B fileownership
+fileownership verifies that all files are owned by root:root and not some other user or group
+.TP
+.B gnomemenu
+gnomemenu looks for file to be stored in /usr/share/gnome/apps
+.TP
+.B infodirectory
+infodirectory verifies that a package does not contain the info directory file (/usr/share/info/dir)
+.TP
+.B invalidstartdir
+Any PKGBUILDs that refer to files not stored in $startdir/pkg or $startdir/src are incorrect
+.TP
+.B license
+license verifies that the licenses variable has been filled in in a PKGBUILD
+.TP
+.B licensepkg
+licensepkg verifies that the licenses variable has been filled in in a package
+.TP
+.B md5sums
+md5sums makes sure that a PKGBUILD includes the md5sums
+.TP
+.B perllocal
+perllocal searches for perllocal.pod.  perllocal.pod is a nasty file that's included during most perl module installations
+.TP
+.B permissions
+permissions checks basic file and and directory permissions.  It returns warnings about world readable bits not being set, world writable bits being set, and world executable bit not being set for directories
+.TP
+.B sfurl
+sfurl verifies that a PKGBUILD is downloading from a specific sourceforge mirror
+.TP
+.B symlink
+symlink points out symlinks that point to $startdir/pkg instead of where the files will actually be installed to
+.TP
+.B tags
+tags is for package maintainers.  It verifies that we have remembered to add a Maintainer and Contributor comment.
+.TP
+.B url
+url verifies that we have a url variable set in the PKGBUILD
+.TP
+.B urlpkg
+url verifies that we have a url variable set in the package file
+.SH EXAMPLES
+.TP
+.B namcap foo.pkg.tar.gz
+apply all rules to foo.pkg.tar.gz
+.TP
+.B namcap -r depends,symlink foo.pkg.tar.gz
+apply the depends and symlink rules to foo.pkg.tar.gz
+.TP
+.B namcap PKGBUILD
+apply all PKGBUILD based rules to the file PKGBUILD
+.TP
+.B namcap -r list
+list all of the available rules
+.SH COPYRIGHT
+Copyright \(co 2003-2007 Jason Chu
+.br
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+.SH AUTHORS
+.nf
+Jason Chu <jason@archlinux.org>
+JJDaNiMoTh <jjdanimoth@gmail.com>
+Jesse Young <jesseyoung@gmail.com>
+.fi

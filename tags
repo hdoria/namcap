@@ -1,0 +1,51 @@
+# namcap tags file
+# separator is "::"
+
+symlink-found %s points to %s :: Symlink (%s) found that points to %s
+dangling-symlink %s points to %s :: Symlink (%s) points to non-existing %s
+hardlink-found %s points to %s :: Hard link (%s) found that points to %s
+dangling-hardlink %s points to %s :: Hard link (%s) points to non-existing %s
+variable-not-array %s :: Variable %s is not an array.
+backups-preceding-slashes :: Backup entries should not have preceding slashes
+package-name-in-uppercase :: No upper case letters in package names
+specific-host-type-used %s :: Reference to one of %s should be changed to $CARCH
+script-link-detected %s in %s :: Script link detected (%s) in file %s
+link-level-dependence %s on %s :: File '%s' link-level dependence on %s
+dependency-is-testing-release %s :: Dependency '%s' on your system is a testing release
+dependency-covered-by-link-dependence %s :: Dependency covered by dependences from link dependence (%s)
+dependency-detected-not-included %s from files %s :: Dependency detected and not included (%s) from files %s
+dependency-detected-not-included %s :: Dependency detected and not included ('%s')
+dependency-already-satisfied %s :: Dependency included but already satisfied ('%s')
+dependency-not-needed %s :: Dependency included and not needed ('%s')
+depends-by-namcap-sight depends=(%s) :: Depends as namcap sees them: depends=(%s)
+file-in-non-standard-dir %s :: File (%s) exists in a non-standard directory.
+empty-directory %s :: Directory (%s) is empty
+extra-var-begins-without-underscore %s :: Non standard variable '%s' doesn't start with an underscore
+non-fhs-man-page %s :: Non-FHS man page (%s) found. Use /usr/share/man instead
+non-fhs-info-page %s :: Non-FHS info page (%s) found. Use /usr/share/info instead
+potential-non-fhs-man-page %s :: Potential non-FHS man page (%s) found.
+incorrect-permissions %s (%s/%s) :: File (%s) has %s/%s permissions.
+info-dir-file-present %s :: Info directory file (%s) needs removed.
+file-referred-in-startdir :: File referenced in $startdir outside of $startdir/src or $startdir/pkg
+recommend-use-pkgdir :: Recommend use of $pkgdir instead of $startdir/pkg
+recommend-use-srcdir :: Recommend use of $srcdir instead of $startdir/src
+libtool-file-present %s :: File (%s) is a libtool file.
+missing-license :: Missing license
+missing-custom-license-dir usr/share/licenses/%s :: Missing custom license directory (usr/share/licenses/%s)
+missing-custom-license-file usr/share/licenses/%s/* :: Missing custom license file in package (usr/share/licenses/%s/*)
+not-a-common-license %s :: %s is not a common license (it's not in /usr/share/licenses/common/)
+missing-md5sums :: Missing md5sums
+not-enough-md5sums %i needed :: Not enough md5sums: %i needed
+too-many-md5sums %i needed :: Too Many md5sums: %i needed
+improper-md5sum %s :: Improper md5sum: '%s'
+perllocal-pod-present %s :: perllocal.pod found in %s.
+file-not-world-readable %s :: File (%s) does not have the world readable bit set.
+file-world-writable %s :: File (%s) does not have the world readable bit set.
+directory-not-world-executable %s :: File (%s) does not have the world readable bit set.
+incorrect-library-permissions %s :: Library (%s) does not have permission set to 644.
+scrollkeeper-dir-exists %s :: Scrollkeeper directory exists (%s). Remember to not run scrollkeeper till post_{install,upgrade,remove}.
+specific-sourceforge-mirror :: Attempting to use specific sourceforge mirror, use downloads.sourceforge.net instead
+using-dl-sourceforge :: Attempting to use dl sourceforge domain, use downloads.sourceforge.net instead
+missing-contributor :: Missing Contributor tag
+missing-maintainer :: Missing Maintainer tag
+missing-url :: Missing url

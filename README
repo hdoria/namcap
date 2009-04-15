@@ -1,0 +1,11 @@
+This is where I'm going to put notes.
+
+The idea is that namcap.py takes the package name as an arguement and can also take the list of rules to run on it... later.  It then runs through all the modules in Namcap.__all__ variable and tests them against the package looking for flaws.
+
+The modules in Namcap.__all__ will contain a class (called package) containing certain functions:
+
+short_name -- returns a string of the identifying name
+long_name -- returns a string of the description
+prereq -- return either "tarfile" or "extract" to signify 
+analyze(pkginfo, data) -- does its analysis (if type is "tarball" then data is a TarFile if prereq returns "tar", from the tarfile module, if it's pkg, no data is sent, and if it's extract then the sandbox directory else if type is "pkgbuild" then data is filename). Returns a list containing three lists.  First list is the list of errors, second list is the list of warnings, third list is information/notices (not warnings, but more like "did you know"s).
+type -- return either "pkgbuild" or "tarball"
