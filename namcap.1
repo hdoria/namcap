@@ -45,17 +45,29 @@ directoryname checks all of the directory names for standard directories (ie. /e
 .B emptydir
 emptydir looks for directories in a package that don't contain any files
 .TP
+.B fhsinfopages
+fhsinfopages verifies correct installation of info pages
+.TP
+.B fhsmanpages
+fhsmanpages verifies correct installation of man pages
+.TP
 .B fileownership
 fileownership verifies that all files are owned by root:root and not some other user or group
 .TP
 .B gnomemenu
 gnomemenu looks for file to be stored in /usr/share/gnome/apps
 .TP
+.B gnomemime
+gnomemime checks for generated GNOME mime files
+.TP
 .B infodirectory
 infodirectory verifies that a package does not contain the info directory file (/usr/share/info/dir)
 .TP
 .B invalidstartdir
 Any PKGBUILDs that refer to files not stored in $startdir/pkg or $startdir/src are incorrect
+.TP
+.B libtool
+libtool checks for libtool (*.la) files
 .TP
 .B license
 license verifies that the licenses variable has been filled in in a PKGBUILD
@@ -71,6 +83,9 @@ perllocal searches for perllocal.pod.  perllocal.pod is a nasty file that's incl
 .TP
 .B permissions
 permissions checks basic file and and directory permissions.  It returns warnings about world readable bits not being set, world writable bits being set, and world executable bit not being set for directories
+.TP
+.B scrollkeeper
+scrollkeeper verifies that there aren't any scrollkeeper directories
 .TP
 .B sfurl
 sfurl verifies that a PKGBUILD is downloading from a specific sourceforge mirror
